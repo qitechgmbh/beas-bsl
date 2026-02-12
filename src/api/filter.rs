@@ -159,6 +159,30 @@ impl ToValue for i64
     }
 }
 
+impl ToValue for i32
+{
+    fn convert(&self) -> String
+    {
+        self.to_string()
+    }
+}
+
+impl ToValue for u64
+{
+    fn convert(&self) -> String
+    {
+        self.to_string()
+    }
+}
+
+impl ToValue for u32
+{
+    fn convert(&self) -> String
+    {
+        self.to_string()
+    }
+}
+
 impl ToValue for bool
 {
     fn convert(&self) -> String
