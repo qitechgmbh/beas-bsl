@@ -12,6 +12,8 @@ pub use error::Error;
 pub use error::ErrorMessage;
 
 pub use filter::Filter;
+pub use filter::FilterBuilder;
+
 pub use query_options::Ordering;
 
 pub mod return_code;
