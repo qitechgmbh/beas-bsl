@@ -126,6 +126,15 @@ impl LogicalOperatorSelector
     }
 }
 
+impl From<LogicalOperatorSelector> for Filter
+{
+    fn from(selector: LogicalOperatorSelector) -> Self
+    {
+        selector.filter
+    }
+}
+
+
 pub trait ToValue
 {
     fn convert(&self) -> String;
