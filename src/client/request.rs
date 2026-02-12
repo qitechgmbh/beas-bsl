@@ -2,7 +2,7 @@ use crate::{
     Client, 
     ClientError, 
     api::{
-        BackflushOptions, Logout, QCOrder, QCOrderMeasurement, QueryOptions, Workorder, WorkorderBom, WorkorderPosition, types::List
+        BackflushOptions, Logout, QCOrder, QCOrderMeasurement, QueryOptions, Workorder, WorkorderBom, WorkorderPosition, WorkorderRouting, types::List
     }, 
 };
 
@@ -14,6 +14,7 @@ pub struct WorkorderEndpoint<'a>    { client: &'a Client }
 pub struct BackflushEndpoint<'a>    { client: &'a Client }
 pub struct WorkorderPosEndpoint<'a> { client: &'a Client }
 pub struct WorkorderBomEndpoint<'a> { client: &'a Client }
+pub struct WorkorderRoutingEndpoint<'a> { client: &'a Client }
 
 // quality_control endpoints
 pub struct QualityControlEndpoint<'a>     { client: &'a Client }
@@ -67,6 +68,11 @@ impl<'a> ProductionEndpoint<'a>
         WorkorderBomEndpoint { client: self.client }
     }
     
+    pub fn workorder_routing(&self) -> WorkorderRoutingEndpoint<'a>
+    {
+        WorkorderRoutingEndpoint { client: self.client }
+    }
+    
     pub fn backflush(&self) -> BackflushEndpoint<'a>
     {
         BackflushEndpoint { client: self.client }
@@ -110,6 +116,20 @@ impl<'a> WorkorderBomEndpoint<'a>
         let options = options.select(WorkorderBom::fields());
         
         let data: List<WorkorderBom> = self.client.get(URL, options)?;
+        
+        Ok(data.value)
+    }
+}
+
+impl<'a> WorkorderRoutingEndpoint<'a>
+{
+    pub fn get(&self, options: QueryOptions) -> Result<Vec<WorkorderRouting>, ClientError>
+    {
+        const URL: &str = "WorkorderRouting";
+        
+        let options = options.select(WorkorderRouting::fields());
+        
+        let data: List<WorkorderRouting> = self.client.get(URL, options)?;
         
         Ok(data.value)
     }
