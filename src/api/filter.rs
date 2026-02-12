@@ -26,54 +26,55 @@ impl Filter
 
 impl OperatorSelector
 {
-    pub fn equals(mut self, field: &str, value: Value) -> LogicalOperatorSelector
+    pub fn equals<T: ToValue>(mut self, field: &str, value: T) -> LogicalOperatorSelector
     {
-        let string = format!("{} eq {}", field, value);
-        self.filter.data.push_str(string.as_str());
-        
+        let string = format!("{} eq {}", field, value.convert());
+        self.filter.data.push_str(&string);
+
         LogicalOperatorSelector { filter: self.filter }
     }
 
-    pub fn not_equals(mut self, field: &str, value: Value) -> LogicalOperatorSelector
+    pub fn not_equals<T: ToValue>(mut self, field: &str, value: T) -> LogicalOperatorSelector
     {
-        let string = format!("{} ne {}", field, value);
-        self.filter.data.push_str(string.as_str());
-        
+        let string = format!("{} ne {}", field, value.convert());
+        self.filter.data.push_str(&string);
+
         LogicalOperatorSelector { filter: self.filter }
     }
 
-    pub fn greater_than(mut self, field: &str, value: Value) -> LogicalOperatorSelector
+    pub fn greater_than<T: ToValue>(mut self, field: &str, value: T) -> LogicalOperatorSelector
     {
-        let string = format!("{} gt {}", field, value);
-        self.filter.data.push_str(string.as_str());
-        
+        let string = format!("{} gt {}", field, value.convert());
+        self.filter.data.push_str(&string);
+
         LogicalOperatorSelector { filter: self.filter }
     }
 
-    pub fn greater_than_or_equal(mut self, field: &str, value: Value) -> LogicalOperatorSelector
+    pub fn greater_than_or_equal<T: ToValue>(mut self, field: &str, value: T) -> LogicalOperatorSelector
     {
-        let string = format!("{} ge {}", field, value);
-        self.filter.data.push_str(string.as_str());
-        
+        let string = format!("{} ge {}", field, value.convert());
+        self.filter.data.push_str(&string);
+
         LogicalOperatorSelector { filter: self.filter }
     }
 
-    pub fn less_than(mut self, field: &str, value: Value) -> LogicalOperatorSelector
+    pub fn less_than<T: ToValue>(mut self, field: &str, value: T) -> LogicalOperatorSelector
     {
-        let string = format!("{} lt {}", field, value);
-        self.filter.data.push_str(string.as_str());
-        
+        let string = format!("{} lt {}", field, value.convert());
+        self.filter.data.push_str(&string);
+
         LogicalOperatorSelector { filter: self.filter }
     }
 
-    pub fn less_than_or_equal(mut self, field: &str, value: Value) -> LogicalOperatorSelector
+    pub fn less_than_or_equal<T: ToValue>(mut self, field: &str, value: T) -> LogicalOperatorSelector
     {
-        let string = format!("{} le {}", field, value);
-        self.filter.data.push_str(string.as_str());
-        
+        let string = format!("{} le {}", field, value.convert());
+        self.filter.data.push_str(&string);
+
         LogicalOperatorSelector { filter: self.filter }
     }
 
+    // non ODATA compliant beas-bsl string operators
     pub fn like(mut self, field: &str, value: &str) -> LogicalOperatorSelector
     {
         let escaped = value.replace('\'', "''");
@@ -125,22 +126,40 @@ impl LogicalOperatorSelector
     }
 }
 
-pub enum Value
+pub trait ToValue
 {
-    String(String),
-    Number(i64),
-    Bool(bool),
+    fn convert(&self) -> String;
 }
 
-impl std::fmt::Display for Value
+// Implement for allowed types
+impl ToValue for &str
 {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result
+    fn convert(&self) -> String
     {
-        match self
-        {
-            Value::String(s) => write!(f, "'{}'", s.replace('\'', "''")),
-            Value::Number(n) => write!(f, "{}", n),
-            Value::Bool(b) => write!(f, "{}", b),
-        }
+        format!("'{}'", self.replace('\'', "''")) // escape quotes
+    }
+}
+
+impl ToValue for String
+{
+    fn convert(&self) -> String
+    {
+        self.as_str().to_string()
+    }
+}
+
+impl ToValue for i64
+{
+    fn convert(&self) -> String
+    {
+        self.to_string()
+    }
+}
+
+impl ToValue for bool
+{
+    fn convert(&self) -> String
+    {
+        self.to_string()
     }
 }
