@@ -6,11 +6,12 @@ mod query_options;
 pub mod types;
 
 mod error;
+mod filter;
 
 pub use error::Error;
 pub use error::ErrorMessage;
 
-pub use query_options::FilterOperator;
+pub use filter::Filter;
 pub use query_options::Ordering;
 
 pub mod return_code;

@@ -1,3 +1,5 @@
+use crate::api::filter::Filter;
+
 #[derive(Debug, Clone, Default)]
 pub struct QueryOptions
 {
@@ -5,7 +7,7 @@ pub struct QueryOptions
     top:      Option<u64>,
     skip:     Option<u64>,
     order_by: Vec<OrderByClause>,
-    filters:  Vec<Filter>,
+    filter:   Option<String>,
     select:   Vec<String>,
 }
 
@@ -21,31 +23,6 @@ pub struct OrderByClause
 {
     pub field:    String,
     pub ordering: Ordering,
-}
-
-#[derive(Debug, Clone)]
-pub struct Filter
-{
-    pub lhs: String,
-    pub op:  FilterOperator,
-    pub rhs: String,
-}
-
-#[derive(Debug, Clone)]
-pub enum FilterOperator
-{
-    // Default ops
-    Equal,
-    NotEqual,
-    GreaterThan,
-    GreaterThanOrEqual,
-    LessThan,
-    LessThanOrEqual,
-    
-    // Additional operators for strings that are not compatible with the ODATA syntax:
-    Like,
-    StartWith,
-    EndWith,
 }
 
 #[derive(Debug, Clone)]
@@ -85,26 +62,12 @@ impl QueryOptions
         self.order_by.push(OrderByClause { field: field.to_string(), ordering });
         self
     }
-
-    pub fn filter<L, R>(mut self, lhs: L, op: FilterOperator, rhs: R) -> Self
-    where
-        L: Into<String>,
-        R: Into<String>,
+    
+    pub fn filter(mut self, filter: Filter) -> Self
     {
-        self.filters.push(Filter
-        {
-            lhs: lhs.into(),
-            op,
-            rhs: rhs.into(),
-        });
+        self.filter = Some(filter.data);
         self
     }
-
-    // pub fn select(mut self, field: &'static str) -> Self
-    // {
-    //     self.select.push(field.to_string());
-    //     self
-    // }
 
     pub fn select<F, I>(mut self, fields: I) -> Self
     where
@@ -167,50 +130,11 @@ impl QueryOptions
             result.push(Query { param: "$orderby", value });
         }
 
-        if !self.filters.is_empty()
+        if let Some(value) = self.filter.clone()
         {
-            let mut value = String::new();
-
-            for (i, filter) in self.filters.iter().enumerate()
-            {
-                if i > 0
-                {
-                    value.push_str(" and ");
-                }
-                
-                value.push_str(&filter.to_string());
-            }
-
             result.push(Query { param: "$filter", value });
         }
         
         result
-    }
-}
-
-impl ToString for Filter
-{
-    fn to_string(&self) -> String
-    {
-        format!("{} {} {}", self.lhs, self.op.to_string(), self.rhs)
-    }
-}
-
-impl ToString for FilterOperator
-{
-    fn to_string(&self) -> String
-    {
-        match self
-        {
-            FilterOperator::Equal => "eq".into(),
-            FilterOperator::NotEqual => "ne".into(),
-            FilterOperator::GreaterThan => "gt".into(),
-            FilterOperator::GreaterThanOrEqual => "ge".into(),
-            FilterOperator::LessThan => "lt".into(),
-            FilterOperator::LessThanOrEqual => "le".into(),
-            FilterOperator::Like => "like".into(),
-            FilterOperator::StartWith => "startswith".into(),
-            FilterOperator::EndWith => "endswith".into(),
-        }
     }
 }
