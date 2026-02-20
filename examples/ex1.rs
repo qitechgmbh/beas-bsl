@@ -1,4 +1,4 @@
-use beas_bsl::{Client, ClientConfig, api::{Ordering, QueryOptions}};
+use beas_bsl::{ Client, ClientConfig, api::{ Ordering, QueryOptions } };
 
 pub fn main()
 {
@@ -24,7 +24,7 @@ pub fn test_range(client: &Client, skip: u64, count: u64)
         ;
     
     let workorders = client
-        .request()
+        .single_request()
         .production()
         .workorder()
         .get(options.clone());
@@ -32,7 +32,7 @@ pub fn test_range(client: &Client, skip: u64, count: u64)
     println!("workorders: {:?}", workorders.is_ok());
     
     let workorder_boms = client
-        .request()
+        .single_request()
         .production()
         .workorder_bom()
         .get(options.clone());
@@ -40,7 +40,7 @@ pub fn test_range(client: &Client, skip: u64, count: u64)
     println!("workorder_boms: {:?}", workorder_boms.is_ok());
     
     let workorder_pos = client
-        .request()
+        .single_request()
         .production()
         .workorder_pos()
         .get(options.clone());
@@ -48,7 +48,7 @@ pub fn test_range(client: &Client, skip: u64, count: u64)
     println!("workorder_pos: {:?}", workorder_pos.is_ok());
     
     let qc_order = client
-        .request()
+        .single_request()
         .quality_control()
         .qcorder()
         .get(options.clone());
@@ -56,7 +56,7 @@ pub fn test_range(client: &Client, skip: u64, count: u64)
     println!("qc_order: {:?}", qc_order.is_ok());
     
     let qc_order_measurement = client
-        .request()
+        .single_request()
         .quality_control()
         .qcorder_measurement()
         .get(options.clone());

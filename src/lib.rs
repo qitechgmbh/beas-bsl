@@ -1,9 +1,11 @@
 mod client;
 
 pub use client::Client;
-pub use client::ClientError;
+pub use client::TransactionError;
 pub use client::ClientConfig;
-pub use client::InitError;
+pub use client::ConfigError;
 pub use client::Credentials;
 
 pub mod api;
+
+pub const BEAS_BSL_VERSION: &str = "2022-04";

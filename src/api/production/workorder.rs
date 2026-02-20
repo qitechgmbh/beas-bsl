@@ -1,6 +1,8 @@
+/// https://help.beascloud.com/script202204/index.html?bslworkorderget.htm
 #[derive(Debug, Clone, serde::Deserialize)]
 pub struct Workorder
 {
+    // Primary Key
     #[serde(rename = "DocEntry")]
     pub doc_entry: i32,
 
@@ -22,7 +24,7 @@ pub struct Workorder
     #[serde(rename = "MailAddres")]
     pub mail_address: Option<String>,
 
-    #[serde(rename = "MailZipCod")]
+    #[serde(rename = "MailZipCode")]
     pub mail_zip_code: Option<String>,
 
     #[serde(rename = "MailCitiy")]

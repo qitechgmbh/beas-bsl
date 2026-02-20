@@ -1,14 +1,19 @@
+// https://help.beascloud.com/script202204/index.html?bslworkorderroutingget.htm
+
 #[derive(Debug, Clone, serde::Deserialize)]
 pub struct WorkorderRouting
 {
+    // Primary Key
     #[serde(rename = "DocEntry")]
     pub doc_entry: i32,
 
+    // Primary Key
     #[serde(rename = "LineNumber")]
-    pub line_number: Option<i32>,
+    pub line_number: i32,
 
+    // Primary Key
     #[serde(rename = "LineNumber2")]
-    pub line_number2: Option<i32>,
+    pub line_number2: i32,
 
     #[serde(rename = "ResourceId")]
     pub resource_id: Option<String>,

@@ -1,12 +1,17 @@
+// https://help.beascloud.com/script202204/index.html?bslworkorderbomget.htm
+
 #[derive(Debug, Clone, serde::Deserialize)]
 pub struct WorkorderBom
 {
+    // Primary Key
     #[serde(rename = "DocEntry")]
     pub doc_entry: i32,
 
+    // Primary Key
     #[serde(rename = "LineNumber")]
     pub line_number: Option<i32>,
 
+    // Primary Key
     #[serde(rename = "LineNumber2")]
     pub line_number2: Option<i32>,
 

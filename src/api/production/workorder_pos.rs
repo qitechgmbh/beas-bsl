@@ -1,9 +1,13 @@
+// https://help.beascloud.com/script202204/index.html?bslworkorderposget.htm
+
 #[derive(Debug, Clone, serde::Deserialize)]
 pub struct WorkorderPosition
 {
+    // Primary Key
     #[serde(rename = "DocEntry")]
     pub doc_entry: i32,
 
+    // Primary Key
     #[serde(rename = "LineNumber")]
     pub line_number: i32,
 

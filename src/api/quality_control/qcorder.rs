@@ -1,3 +1,5 @@
+// https://help.beascloud.com/script202204/index.html?bslqcorderget.htm
+
 #[derive(Debug, Clone, serde::Deserialize)]
 pub struct QCOrder
 {

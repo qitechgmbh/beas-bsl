@@ -2,11 +2,9 @@ pub mod production;
 pub mod quality_control;
 
 mod query_options;
-
-pub mod types;
-
 mod error;
 mod filter;
+pub(crate) mod helpers;
 
 pub use error::Error;
 pub use error::ErrorMessage;
@@ -21,6 +19,15 @@ pub mod return_code;
 pub use query_options::QueryOptions;
 
 use serde::Deserialize;
+
+pub use production::workorder::Workorder;
+pub use production::workorder_pos::WorkorderPosition;
+pub use production::workorder_bom::WorkorderBom;
+pub use production::workorder_routing::WorkorderRouting;
+pub use production::backflush::BackflushRequest;
+
+pub use quality_control::qcorder::QCOrder;
+pub use quality_control::qcorder_measurement::QCOrderMeasurement;
 
 #[derive(Debug, Clone, Deserialize)]
 pub struct Logout
@@ -37,12 +44,3 @@ pub struct Login
     #[serde(rename = "beas-sessionid")]
     pub beas_session_id: String,
 }
-
-pub use production::workorder::Workorder;
-pub use production::workorder_pos::WorkorderPosition;
-pub use production::workorder_bom::WorkorderBom;
-pub use production::workorder_routing::WorkorderRouting;
-pub use production::backflush::BackflushOptions;
-
-pub use quality_control::qcorder::QCOrder;
-pub use quality_control::qcorder_measurement::QCOrderMeasurement;

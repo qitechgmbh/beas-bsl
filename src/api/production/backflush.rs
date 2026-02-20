@@ -1,11 +1,13 @@
+// https://help.beascloud.com/script202204/index.html?backflush.htm
+
 #[derive(Debug, Clone, serde::Serialize)]
-pub struct BackflushOptions
+pub struct BackflushRequest
 {
     /// Work oder number
     #[serde(rename = "DocEntry")]
     doc_entry: u32,
     
-    /// Line Number 
+    /// Line Number
     #[serde(rename = "LineNumber")]
     line_number: u32,
     
