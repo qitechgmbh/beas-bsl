@@ -13,7 +13,7 @@ pub struct BackflushRequest
     
     /// Optional Document date, if not today.
     #[serde(rename = "DocDate")]
-    pub doc_date: Option<f32>,
+    pub doc_date: Option<String>,
     
     /// set to true, if you want to close the work order
     #[serde(rename = "CloseEntry")]
@@ -21,13 +21,42 @@ pub struct BackflushRequest
     
     /// Good Quantity in Warehouse Unit
     #[serde(rename = "QuantityGood")]
-    pub quantity_good: i32,
+    pub quantity_good: f32,
     
     /// Issue information
     #[serde(rename = "IssueLines")]
-    pub issue_lines: Vec<String>,
+    pub issue_lines: Vec<IssueLine>,
     
     /// receipt information
     #[serde(rename = "ReceiptLines")]
-    pub receipt_lines: Vec<String>,
+    pub receipt_lines: Vec<ReceiptLine>,
+}
+
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct IssueLine
+{
+    #[serde(rename = "LineNumber2")]
+    line_number2: i32,
+
+    #[serde(rename = "Quantity")]
+    quantity: f32,
+
+    #[serde(rename = "Quantity")]
+    item_code: String,
+
+    #[serde(rename = "Quantity")]
+    whs_code: String,
+}
+
+#[derive(Debug, Clone, serde::Serialize)]
+pub struct ReceiptLine
+{
+    #[serde(rename = "Quantity")]
+    quantity: f32,
+
+    #[serde(rename = "Quantity")]
+    item_code: String,
+
+    #[serde(rename = "Quantity")]
+    whs_code: String,
 }

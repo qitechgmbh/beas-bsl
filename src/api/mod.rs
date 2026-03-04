@@ -24,6 +24,8 @@ pub use production::workorder::Workorder;
 pub use production::workorder_pos::WorkorderPosition;
 pub use production::workorder_bom::WorkorderBom;
 pub use production::workorder_routing::WorkorderRouting;
+
+pub use production::backflush;
 pub use production::backflush::BackflushRequest;
 
 pub use quality_control::qcorder::QCOrder;
