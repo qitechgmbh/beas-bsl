@@ -36,27 +36,27 @@ pub struct BackflushRequest
 pub struct IssueLine
 {
     #[serde(rename = "LineNumber2")]
-    line_number2: i32,
+    pub line_number2: i32,
 
     #[serde(rename = "Quantity")]
-    quantity: f32,
+    pub quantity: f32,
 
     #[serde(rename = "Quantity")]
-    item_code: String,
+    pub item_code: String,
 
     #[serde(rename = "Quantity")]
-    whs_code: String,
+    pub whs_code: String,
 }
 
 #[derive(Debug, Clone, serde::Serialize)]
 pub struct ReceiptLine
 {
     #[serde(rename = "Quantity")]
-    quantity: f32,
+    pub quantity: f32,
 
     #[serde(rename = "Quantity")]
-    item_code: String,
+    pub item_code: String,
 
     #[serde(rename = "Quantity")]
-    whs_code: String,
+    pub whs_code: String,
 }
