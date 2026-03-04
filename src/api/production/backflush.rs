@@ -5,11 +5,11 @@ pub struct BackflushRequest
 {
     /// Work oder number
     #[serde(rename = "DocEntry")]
-    pub doc_entry: u32,
+    pub doc_entry: i32,
     
     /// Line Number
     #[serde(rename = "LineNumber")]
-    pub line_number: u32,
+    pub line_number: i32,
     
     /// Optional Document date, if not today.
     #[serde(rename = "DocDate")]
@@ -21,7 +21,7 @@ pub struct BackflushRequest
     
     /// Good Quantity in Warehouse Unit
     #[serde(rename = "QuantityGood")]
-    pub quantity_good: u32,
+    pub quantity_good: i32,
     
     /// Issue information
     #[serde(rename = "IssueLines")]
