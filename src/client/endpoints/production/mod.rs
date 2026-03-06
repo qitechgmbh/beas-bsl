@@ -5,6 +5,7 @@ mod workorder_pos;
 mod workorder_bom;
 mod workorder_routing;
 mod backflush;
+mod time_receipt;
 
 /// Represents the Production API endpoint, providing access to production-related operations.
 pub struct Endpoint<'a> 
@@ -39,6 +40,12 @@ impl<'a> Endpoint<'a>
         workorder_routing::Endpoint { client: self.client }
     }
     
+    /// Returns a handle to the backflush endpoint for production operations.
+    pub fn time_receipt(&self) -> time_receipt::Endpoint<'a>
+    {
+        time_receipt::Endpoint { client: self.client }
+    }
+
     /// Returns a handle to the backflush endpoint for production operations.
     pub fn backflush(&self) -> backflush::Endpoint<'a>
     {

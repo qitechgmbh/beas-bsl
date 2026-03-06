@@ -25,6 +25,9 @@ pub use production::workorder_pos::WorkorderPosition;
 pub use production::workorder_bom::WorkorderBom;
 pub use production::workorder_routing::WorkorderRouting;
 
+pub use production::time_receipt;
+pub use production::time_receipt::TimeReceipt;
+
 pub use production::backflush;
 pub use production::backflush::BackflushRequest;
 
