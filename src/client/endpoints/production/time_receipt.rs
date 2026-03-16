@@ -1,12 +1,5 @@
-use crate::{
-    Client, 
-    TransactionError, 
-    api::{ 
-        QueryOptions, 
-        TimeReceipt,
-        helpers::List,
-    }, 
-};
+use crate::{Client, TransactionError};
+use crate::api::{QueryOptions, time_receipt::post, TimeReceipt, helpers::List};
 
 pub struct Endpoint<'a> 
 { 
@@ -15,14 +8,28 @@ pub struct Endpoint<'a>
 
 impl<'a> Endpoint<'a>
 {
+    const URL: &'static str = "TimeReceipt";
+
     pub fn get(&self, options: QueryOptions) -> Result<Vec<TimeReceipt>, TransactionError>
     {
-        const URL: &str = "TimeReceipt";
-        
         let options = options.select(TimeReceipt::fields());
         
-        let data: List<TimeReceipt> = self.client.get(URL, options)?;
+        let data: List<TimeReceipt> = self.client.get(Self::URL, options)?;
         
         Ok(data.value)
+    }
+
+    pub fn post(&self, request: post::Request) -> Result<post::Response, TransactionError>
+    {
+        let value: serde_json::Value = serde_json::to_value(request)?;
+
+        // Pretty-print to stdout
+        println!("{}", serde_json::to_string_pretty(&value)?);
+
+        let array_value = serde_json::Value::Array(vec![value]);
+
+        let response: post::Response = self.client.post(Self::URL, Some(array_value))?;
+        
+        Ok(response)
     }
 }

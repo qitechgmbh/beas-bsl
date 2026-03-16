@@ -20,6 +20,9 @@ pub use query_options::QueryOptions;
 
 use serde::Deserialize;
 
+mod date;
+pub use date::Date;
+
 pub use production::workorder::Workorder;
 pub use production::workorder_pos::WorkorderPosition;
 pub use production::workorder_bom::WorkorderBom;

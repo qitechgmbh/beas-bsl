@@ -25,26 +25,23 @@ pub struct Client
 
 impl Client
 {
-    pub fn new(config: ClientConfig) -> Result<Self, TransactionError>
-    {
+    pub fn new(config: ClientConfig) -> Result<Self, TransactionError> {
+        use Credentials::*;
+        
         let session_id: String = match config.credentials 
         {
-            Credentials::Password(password) => Self::create_session(&config.server_root, password)?,
-            Credentials::SessionId(id)      => id,
+            Password(password) => Self::create_session(&config.server_root, password)?,
+            SessionId(id)      => id,
         };
         
         Ok(Self { server_root: config.server_root, session_id })
     }
     
-    pub fn single_request<'a>(&'a self) -> RootEndpoint<'a>
-    {
+    pub fn single_request<'a>(&'a self) -> RootEndpoint<'a> {
         RootEndpoint { client: self }
     }
     
-    pub fn multiple_requests()
-    {
-        
-    }
+    pub fn multiple_requests() { todo!("Not implemented") }
     
     /// Attempts to create a new session by logging in via the provided password
     fn create_session(server_root: &str, password: String) -> Result<String, TransactionError>
@@ -67,8 +64,7 @@ impl Client
         let mut request = ureq::get(&path).set("Cookie", &self.session_id);
 
         // TODO: validate first for syntax errors!
-        for query in options.to_query_list() 
-        {
+        for query in options.to_query_list() {
             request = request.query(query.param, &query.value.as_str());
         }
 
@@ -77,40 +73,42 @@ impl Client
         Self::deserialize_reponse::<T>(response)
     }
     
-    fn post<U: Into<String>, T: DeserializeOwned + Debug>(&self, url: U, body: Option<serde_json::Value>) -> Result<T, TransactionError>
+    fn post<U: Into<String>, T: DeserializeOwned + Debug>(
+        &self, 
+        url: U, 
+        body: Option<serde_json::Value>
+    ) -> Result<T, TransactionError>
     {
         let path = format!("{}/{}", &self.server_root, url.into());
         
-        let request = ureq::get(&path).set("Cookie", &self.session_id);
+        let request = ureq::post(&path).set("Cookie", &self.session_id);
 
-        let response = match body
-        {
+        let response = match body {
             Some(data) => request.send_json(data),
             None       => request.call(),
         }?;
 
+        println!("Response: {:?}", response);
+
         Self::deserialize_reponse::<T>(response)
     }
     
-    fn deserialize_reponse<T: DeserializeOwned + Debug>(response: ureq::Response) -> Result<T, TransactionError>
+    fn deserialize_reponse<T: DeserializeOwned + Debug>(
+        response: ureq::Response
+    ) -> Result<T, TransactionError> 
     {
         let body = response.into_string()?;
         
-        // println!("res: {:?}", serde_json::from_str::<T>(&body));
-        //response.into_json::<RawResponse<T>>()
-        
-        match serde_json::from_str::<RawResponse<T>>(&body)? 
-        {
+        match serde_json::from_str::<RawResponse<T>>(&body)? {
             RawResponse::Data(data) => Ok(data),
             RawResponse::Err(e)     => Err(TransactionError::ApiError(e.value)),
         }
     }
 }
 
-impl Drop for Client
+impl Drop for Client 
 {
-    fn drop(&mut self) 
-    {
+    fn drop(&mut self) {
         _ = self.single_request().logout();
     }
 }
