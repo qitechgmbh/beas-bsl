@@ -2,12 +2,12 @@ use serde::{Serialize, Deserialize, Serializer, Deserializer};
 use serde::de::{self, Visitor};
 use std::fmt;
 
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Copy)]
 pub struct Date
 {
     pub year: i32,
-    pub month: u8,
-    pub day: u8,
+    pub month: u32,
+    pub day: u32,
 } // 2020/02/28
 
 impl Serialize for Date {

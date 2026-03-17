@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::api::Date;
+use crate::api::{Date, Time};
 
 #[derive(Debug, Clone, Serialize, Default)]
 pub struct Request
@@ -81,7 +81,7 @@ pub struct Request
     pub time_receipt_scrap: Vec<ScrapEntry>,
 
     #[serde(rename = "Duration", skip_serializing_if = "Option::is_none")]
-    pub duration: Option<i32>,
+    pub duration: Option<f32>,
 
     #[serde(rename = "Barcode", skip_serializing_if = "Option::is_none")]
     pub barcode: Option<String>,
@@ -147,10 +147,10 @@ pub struct Request
     pub udf15: Option<String>,
 
     #[serde(rename = "FromTime", skip_serializing_if = "Option::is_none")]
-    pub from_time: Option<String>,
+    pub from_time: Option<Time>,
 
     #[serde(rename = "ToTime", skip_serializing_if = "Option::is_none")]
-    pub to_time: Option<String>,
+    pub to_time: Option<Time>,
 }
 
 

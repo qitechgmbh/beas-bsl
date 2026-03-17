@@ -23,6 +23,9 @@ use serde::Deserialize;
 mod date;
 pub use date::Date;
 
+mod time;
+pub use time::Time;
+
 pub use production::workorder::Workorder;
 pub use production::workorder_pos::WorkorderPosition;
 pub use production::workorder_bom::WorkorderBom;
