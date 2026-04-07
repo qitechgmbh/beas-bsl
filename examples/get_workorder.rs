@@ -1,11 +1,8 @@
-use beas_bsl::{ Client, ClientConfig, api::{ Ordering, QueryOptions } };
+use beas_bsl::{ Client, ClientConfig };
+use beas_bsl::api::{ Ordering, QueryOptions };
 
-pub fn main()
-{
-    let config_data = std::fs::read_to_string("config.json").unwrap();
-
-    let config = serde_json::from_str::<ClientConfig>(&config_data).unwrap();
-
+pub fn main() {
+    let config = ClientConfig::from_file("config.json").unwrap();
     let client = Client::new(config).unwrap();
     
     let options = QueryOptions::new()
@@ -15,10 +12,10 @@ pub fn main()
     
     let workorders = 
         client
-        .single_request()
+        .request_single()
         .production()
         .workorder()
-        .get(options.clone())
+        .get(options)
         .unwrap();
         
     println!("Workorder: {:?}", workorders);

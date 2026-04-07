@@ -37,7 +37,7 @@ impl Client
         Ok(Self { server_root: config.server_root, session_id })
     }
     
-    pub fn single_request<'a>(&'a self) -> RootEndpoint<'a> {
+    pub fn request_single<'a>(&'a self) -> RootEndpoint<'a> {
         RootEndpoint { client: self }
     }
     
@@ -109,6 +109,6 @@ impl Client
 impl Drop for Client 
 {
     fn drop(&mut self) {
-        _ = self.single_request().logout();
+        _ = self.request_single().logout();
     }
 }
