@@ -226,15 +226,12 @@ pub struct ReceiptLine
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct Response
-{
-    #[serde(rename = "Value")]
+pub struct Response {
     pub value: i32,
 
     #[serde(rename = "SystemNumber")]
     pub system_number: Vec<i32>,
 
-    #[serde(rename = "LineNumber2")]
     pub values: Vec<ValueEntry>,
 }
 
