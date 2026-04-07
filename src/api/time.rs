@@ -16,14 +16,13 @@ impl Time
         let self_minutes = self.hour as i32 * 60 + self.minute as i32;
         let other_minutes = other.hour as i32 * 60 + other.minute as i32;
 
-        // Calculatepub  difference (wrap around 24h if negative)
+        // Calculate difference (wrap around 24h if negative)
         let mut diff_minutes = other_minutes - self_minutes;
         if diff_minutes < 0 {
             diff_minutes += 24 * 60; // wrap to next day
         }
 
         Duration::from_secs((diff_minutes * 60) as u64)
-
     }
 }
 

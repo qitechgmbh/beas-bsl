@@ -7,6 +7,8 @@ mod error;
 mod config;
 mod endpoints;
 
+mod transaction;
+
 pub use error::TransactionError;
 
 pub use config::Config as ClientConfig;
@@ -15,10 +17,8 @@ pub use config::Credentials;
 
 use endpoints::RootEndpoint;
 
-/// Client for interacting with the Beas BSL
 #[derive(Debug, Clone)]
-pub struct Client 
-{
+pub struct Client  {
     server_root: String,
     session_id:  String,
 }
@@ -28,8 +28,7 @@ impl Client
     pub fn new(config: ClientConfig) -> Result<Self, TransactionError> {
         use Credentials::*;
         
-        let session_id: String = match config.credentials 
-        {
+        let session_id: String = match config.credentials {
             Password(password) => Self::create_session(&config.server_root, password)?,
             SessionId(id)      => id,
         };
