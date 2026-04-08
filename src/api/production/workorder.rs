@@ -1,7 +1,6 @@
 /// https://help.beascloud.com/script202204/index.html?bslworkorderget.htm
 #[derive(Debug, Clone, serde::Deserialize)]
-pub struct Workorder
-{
+pub struct Workorder {
     // Primary Key
     #[serde(rename = "DocEntry")]
     pub doc_entry: i32,
@@ -70,7 +69,6 @@ pub struct Workorder
     // NOTE: DATATYPE MISMATCH: found float instead of int???
     // #[serde(rename = "WorkTime")]
     // pub work_time: Option<i32>,
-
     #[serde(rename = "ReservedTime")]
     pub reserved_time: Option<i32>,
 
@@ -96,10 +94,8 @@ pub struct Workorder
     pub aps_status: Option<bool>,
 }
 
-impl Workorder
-{
-    const FIELDS: [&str; 30] =
-    [
+impl Workorder {
+    const FIELDS: [&str; 30] = [
         "DocEntry",
         "DocNum",
         "DocDate",
@@ -131,9 +127,8 @@ impl Workorder
         "Locked",
         "ApsStatus",
     ];
-    
-    pub fn fields() -> &'static [&'static str]
-    {
+
+    pub fn fields() -> &'static [&'static str] {
         &Self::FIELDS
     }
 }

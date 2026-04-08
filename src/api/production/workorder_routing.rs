@@ -1,8 +1,7 @@
 // https://help.beascloud.com/script202204/index.html?bslworkorderroutingget.htm
 
 #[derive(Debug, Clone, serde::Deserialize)]
-pub struct WorkorderRouting
-{
+pub struct WorkorderRouting {
     // Primary Key
     #[serde(rename = "DocEntry")]
     pub doc_entry: i32,
@@ -112,10 +111,8 @@ pub struct WorkorderRouting
     pub for_personnel_id: Option<String>,
 }
 
-impl WorkorderRouting
-{
-    const FIELDS: [&str; 35] =
-    [
+impl WorkorderRouting {
+    const FIELDS: [&str; 35] = [
         "DocEntry",
         "LineNumber",
         "LineNumber2",
@@ -153,8 +150,7 @@ impl WorkorderRouting
         "ForPersonnelId",
     ];
 
-    pub fn fields() -> &'static [&'static str]
-    {
+    pub fn fields() -> &'static [&'static str] {
         &Self::FIELDS
     }
 }

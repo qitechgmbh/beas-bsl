@@ -1,8 +1,7 @@
 // https://help.beascloud.com/script202204/index.html?bslworkorderbomget.htm
 
 #[derive(Debug, Clone, serde::Deserialize)]
-pub struct WorkorderBom
-{
+pub struct WorkorderBom {
     // Primary Key
     #[serde(rename = "DocEntry")]
     pub doc_entry: i32,
@@ -101,10 +100,8 @@ pub struct WorkorderBom
     pub closed: Option<bool>,
 }
 
-impl WorkorderBom
-{
-    const FIELDS: [&str; 30] =
-    [
+impl WorkorderBom {
+    const FIELDS: [&str; 30] = [
         "DocEntry",
         "LineNumber",
         "LineNumber2",
@@ -137,8 +134,7 @@ impl WorkorderBom
         "Closed",
     ];
 
-    pub fn fields() -> &'static [&'static str]
-    {
+    pub fn fields() -> &'static [&'static str] {
         &Self::FIELDS
     }
 }

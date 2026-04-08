@@ -3,8 +3,7 @@ use serde::{Deserialize, Serialize};
 use crate::api::{Date, Time};
 
 #[derive(Debug, Clone, Serialize, Default)]
-pub struct Request
-{
+pub struct Request {
     #[serde(rename = "DocEntry")]
     pub doc_entry: i32,
 
@@ -65,7 +64,10 @@ pub struct Request
     #[serde(rename = "EndTime", skip_serializing_if = "Option::is_none")]
     pub end_time: Option<String>,
 
-    #[serde(rename = "FromTimeReceiptRunning", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "FromTimeReceiptRunning",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub from_time_receipt_running: Option<i32>,
 
     #[serde(rename = "CloseEntry", skip_serializing_if = "Option::is_none")]
@@ -74,7 +76,10 @@ pub struct Request
     #[serde(rename = "ManualBooking", skip_serializing_if = "Option::is_none")]
     pub manual_booking: Option<bool>,
 
-    #[serde(rename = "TimeReceiptRunningId", skip_serializing_if = "Option::is_none")]
+    #[serde(
+        rename = "TimeReceiptRunningId",
+        skip_serializing_if = "Option::is_none"
+    )]
     pub time_receipt_running_id: Option<i32>,
 
     #[serde(rename = "TimeReceiptScrap")]
@@ -93,7 +98,7 @@ pub struct Request
     pub issue: Option<Issue>,
 
     #[serde(rename = "Receipt", skip_serializing_if = "Option::is_none")]
-    pub receipt: Option<Receipt>, 
+    pub receipt: Option<Receipt>,
 
     #[serde(rename = "LogInfo", skip_serializing_if = "Option::is_none")]
     pub log_info: Option<String>,
@@ -153,10 +158,8 @@ pub struct Request
     pub to_time: Option<Time>,
 }
 
-
 #[derive(Debug, Clone, Serialize)]
-pub struct ScrapEntry
-{
+pub struct ScrapEntry {
     #[serde(rename = "ScrapId")]
     pub scrap_id: String,
 
@@ -183,15 +186,13 @@ pub struct ScrapEntry
 }
 
 #[derive(Debug, Clone, Serialize)]
-pub struct Issue
-{
+pub struct Issue {
     #[serde(rename = "Lines")]
     pub lines: Vec<IssueLine>,
 }
 
 #[derive(Debug, Clone, Serialize)]
-pub struct IssueLine
-{
+pub struct IssueLine {
     #[serde(rename = "ItemCode")]
     pub item_code: String,
 
@@ -206,15 +207,13 @@ pub struct IssueLine
 }
 
 #[derive(Debug, Clone, Serialize)]
-pub struct Receipt
-{
+pub struct Receipt {
     #[serde(rename = "Lines")]
     pub lines: Vec<ReceiptLine>,
 }
 
 #[derive(Debug, Clone, Serialize)]
-pub struct ReceiptLine
-{
+pub struct ReceiptLine {
     #[serde(rename = "ItemCode")]
     pub item_code: String,
 
@@ -236,8 +235,7 @@ pub struct Response {
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct ValueEntry
-{
+pub struct ValueEntry {
     #[serde(rename = "TimeReceiptEntry")]
     pub time_receipt_entry: i32,
 

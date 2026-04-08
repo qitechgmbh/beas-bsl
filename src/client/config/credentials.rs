@@ -1,36 +1,34 @@
 use std::fmt;
 
-use serde::{Deserialize, Deserializer, de::{self, MapAccess, Visitor}};
+use serde::{
+    Deserialize, Deserializer,
+    de::{self, MapAccess, Visitor},
+};
 
 #[derive(Debug, Clone)]
-pub enum Credentials 
-{
+pub enum Credentials {
     Password(String),
     SessionId(String),
 }
 
-impl<'de> Deserialize<'de> for Credentials
-{
+impl<'de> Deserialize<'de> for Credentials {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
     {
-        enum Field 
-        {
+        enum Field {
             Password,
             SessionId,
         }
 
-        impl<'de> Deserialize<'de> for Field
-        {
+        impl<'de> Deserialize<'de> for Field {
             fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
             where
                 D: Deserializer<'de>,
             {
                 let s = String::deserialize(deserializer)?;
-                match s.as_str() 
-                {
-                    "password"   => Ok(Field::Password),
+                match s.as_str() {
+                    "password" => Ok(Field::Password),
                     "session_id" => Ok(Field::SessionId),
                     _ => Err(de::Error::unknown_field(&s, &["password", "session_id"])),
                 }
@@ -39,12 +37,10 @@ impl<'de> Deserialize<'de> for Credentials
 
         struct CredentialsVisitor;
 
-        impl<'de> Visitor<'de> for CredentialsVisitor
-        {
+        impl<'de> Visitor<'de> for CredentialsVisitor {
             type Value = Credentials;
 
-            fn expecting(&self, f: &mut fmt::Formatter) -> fmt::Result
-            {
+            fn expecting(&self, f: &mut fmt::Formatter) -> fmt::Result {
                 f.write_str("password or session_id")
             }
 
@@ -52,7 +48,9 @@ impl<'de> Deserialize<'de> for Credentials
             where
                 A: MapAccess<'de>,
             {
-                let key: Field = map.next_key()?.ok_or_else(|| de::Error::custom("empty credentials"))?;
+                let key: Field = map
+                    .next_key()?
+                    .ok_or_else(|| de::Error::custom("empty credentials"))?;
                 let value: String = map.next_value()?;
 
                 match key {

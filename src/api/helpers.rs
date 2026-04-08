@@ -4,21 +4,18 @@ use crate::api::Error;
 
 #[derive(Debug, Deserialize)]
 #[serde(untagged)]
-pub enum RawResponse<T> 
-{
+pub enum RawResponse<T> {
     Data(T),
     Err(RawError),
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct RawError 
-{ 
+pub struct RawError {
     #[serde(rename = "error")]
-    pub value: Error 
+    pub value: Error,
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct List<T> 
-{ 
-    pub value: Vec<T> 
+pub struct List<T> {
+    pub value: Vec<T>,
 }

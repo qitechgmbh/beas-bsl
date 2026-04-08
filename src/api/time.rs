@@ -1,5 +1,5 @@
-use serde::{Serialize, Deserialize, Serializer, Deserializer};
 use serde::de::{self, Visitor};
+use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use std::fmt;
 use std::time::Duration;
 
@@ -9,8 +9,7 @@ pub struct Time {
     pub minute: u32, // 0-59
 }
 
-impl Time 
-{
+impl Time {
     pub fn compute_duration(&self, other: Time) -> Duration {
         // Convert both times to minutes
         let self_minutes = self.hour as i32 * 60 + self.minute as i32;
@@ -29,15 +28,14 @@ impl Time
 impl Serialize for Time {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
-        S: Serializer
+        S: Serializer,
     {
         let s = format!("{:02}:{:02}", self.hour, self.minute);
         serializer.serialize_str(&s)
     }
 }
 
-impl<'de> Deserialize<'de> for Time 
-{
+impl<'de> Deserialize<'de> for Time {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: Deserializer<'de>,
@@ -61,7 +59,7 @@ impl<'de> Deserialize<'de> for Time
                     return Err(E::custom("invalid date format"));
                 }
 
-                let hour  = parts[0].parse().map_err(E::custom)?;
+                let hour = parts[0].parse().map_err(E::custom)?;
                 let minute = parts[1].parse().map_err(E::custom)?;
 
                 Ok(Time { hour, minute })

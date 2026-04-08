@@ -1,8 +1,7 @@
 // https://help.beascloud.com/script202204/index.html?bslqcorderget.htm
 
 #[derive(Debug, Clone, serde::Deserialize)]
-pub struct QCOrder
-{
+pub struct QCOrder {
     #[serde(rename = "DocEntry")]
     pub doc_entry: i32,
 
@@ -169,10 +168,8 @@ pub struct QCOrder
     pub last_change_user_id: Option<String>,
 }
 
-impl QCOrder
-{
-    const FIELDS: [&str; 55] =
-    [
+impl QCOrder {
+    const FIELDS: [&str; 55] = [
         "DocEntry",
         "DocOrder",
         "DocOrder2",
@@ -230,8 +227,7 @@ impl QCOrder
         "LastChangeUserId",
     ];
 
-    pub fn fields() -> &'static [&'static str]
-    {
+    pub fn fields() -> &'static [&'static str] {
         &Self::FIELDS
     }
 }

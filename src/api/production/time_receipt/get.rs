@@ -1,6 +1,5 @@
 #[derive(Debug, Clone, serde::Deserialize)]
-pub struct TimeReceipt
-{
+pub struct TimeReceipt {
     #[serde(rename = "SystemNumber")]
     pub system_number: i32,
 
@@ -134,10 +133,8 @@ pub struct TimeReceipt
     pub barcode: Option<f64>,
 }
 
-impl TimeReceipt
-{
-    const FIELDS: [&str; 44] =
-    [
+impl TimeReceipt {
+    const FIELDS: [&str; 44] = [
         "SystemNumber",
         "DocEntry",
         "LineNumber",
@@ -184,8 +181,7 @@ impl TimeReceipt
         "Barcode",
     ];
 
-    pub fn fields() -> &'static [&'static str]
-    {
+    pub fn fields() -> &'static [&'static str] {
         &Self::FIELDS
     }
 }

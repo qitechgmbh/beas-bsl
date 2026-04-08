@@ -1,8 +1,7 @@
 // https://help.beascloud.com/script202204/index.html?bslqcordermeasurementget.htm
 
 #[derive(Debug, Clone, serde::Deserialize)]
-pub struct QCOrderMeasurement
-{
+pub struct QCOrderMeasurement {
     #[serde(rename = "DocEntry")]
     pub doc_entry: Option<i32>,
 
@@ -156,10 +155,8 @@ pub struct QCOrderMeasurement
     pub last_change_user_id: Option<String>,
 }
 
-impl QCOrderMeasurement
-{
-    const FIELDS: [&str; 48] =
-    [
+impl QCOrderMeasurement {
+    const FIELDS: [&str; 48] = [
         "DocEntry",
         "DocOrder",
         "DocOrder2",
@@ -210,8 +207,7 @@ impl QCOrderMeasurement
         "LastChangeUserId",
     ];
 
-    pub fn fields() -> &'static [&'static str]
-    {
+    pub fn fields() -> &'static [&'static str] {
         &Self::FIELDS
     }
 }

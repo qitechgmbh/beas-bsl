@@ -1,8 +1,7 @@
 // https://help.beascloud.com/script202204/index.html?bslworkorderposget.htm
 
 #[derive(Debug, Clone, serde::Deserialize)]
-pub struct WorkorderPosition
-{
+pub struct WorkorderPosition {
     // Primary Key
     #[serde(rename = "DocEntry")]
     pub doc_entry: i32,
@@ -126,10 +125,8 @@ pub struct WorkorderPosition
     pub login_to_work_order: Option<bool>,
 }
 
-impl WorkorderPosition
-{
-    const FIELDS: [&str; 40] =
-    [
+impl WorkorderPosition {
+    const FIELDS: [&str; 40] = [
         "DocEntry",
         "LineNumber",
         "Barcode",
@@ -172,8 +169,7 @@ impl WorkorderPosition
         "LoginToWorkOrder",
     ];
 
-    pub fn fields() -> &'static [&'static str]
-    {
+    pub fn fields() -> &'static [&'static str] {
         &Self::FIELDS
     }
 }

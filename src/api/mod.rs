@@ -1,10 +1,10 @@
 pub mod production;
 pub mod quality_control;
 
-mod query_options;
 mod error;
 mod filter;
 pub(crate) mod helpers;
+mod query_options;
 
 pub use error::Error;
 pub use error::ErrorMessage;
@@ -27,8 +27,8 @@ mod time;
 pub use time::Time;
 
 pub use production::workorder::Workorder;
-pub use production::workorder_pos::WorkorderPosition;
 pub use production::workorder_bom::WorkorderBom;
+pub use production::workorder_pos::WorkorderPosition;
 pub use production::workorder_routing::WorkorderRouting;
 
 pub use production::time_receipt;
@@ -41,15 +41,13 @@ pub use quality_control::qcorder::QCOrder;
 pub use quality_control::qcorder_measurement::QCOrderMeasurement;
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct Logout
-{
+pub struct Logout {
     pub ret_code: u32,
     pub ret_text: String,
 }
 
 #[derive(Debug, Clone, Deserialize)]
-pub struct Login
-{
+pub struct Login {
     pub ret_code: u32,
     pub ret_text: String,
     #[serde(rename = "beas-sessionid")]
